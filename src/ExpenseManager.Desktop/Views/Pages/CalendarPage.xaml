@@ -1,0 +1,232 @@
+<UserControl x:Class="ExpenseManager.Desktop.Views.Pages.CalendarPage"
+             x:Name="Root"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ExpenseManager.Desktop.ViewModels"
+             xmlns:extensions="clr-namespace:ExpenseManager.Desktop.Extensions"
+             Background="Transparent"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModels:CalendarViewModel}">
+    <UserControl.Resources>
+        <Style x:Key="CalendarDismissButtonStyle" TargetType="Button" BasedOn="{StaticResource SidebarLinkButton}">
+            <Setter Property="MinWidth" Value="100" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Content.IsDismissed, RelativeSource={RelativeSource AncestorType=ListViewItem}}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Margin="0,0,0,24">
+        <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" ItemWidth="240" MinWidth="240">
+             <StackPanel Orientation="Vertical" Margin="0,0,16,0">
+                <TextBlock Text="{extensions:TranslateExtension CALENDAR_FOCUS_DATE}" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="12" FontWeight="SemiBold" />
+                <DatePicker SelectedDate="{Binding FocusDate, Mode=TwoWay}" Width="180" CalendarStyle="{StaticResource ThemedCalendar}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0,0,16,0">
+                <TextBlock Text="{extensions:TranslateExtension CALENDAR_RANGE}" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="12" FontWeight="SemiBold" />
+                <ComboBox ItemsSource="{Binding RangeOptions}"
+                          SelectedItem="{Binding SelectedRange, Mode=TwoWay}"
+                          DisplayMemberPath="DisplayText"
+                          Width="180" />
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0,0,16,0">
+                <TextBlock Text="{extensions:TranslateExtension CALENDAR_SEARCH}" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="12" FontWeight="SemiBold" />
+                <TextBox Width="240"
+                         Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <WrapPanel Margin="0,16,0,0">
+                <!-- Single Add button triggers inline add form -->
+                <Button Content="{extensions:TranslateExtension ACTION_ADD}"
+                        Style="{StaticResource AccentButton}"
+                        Width="160"
+                        Margin="0,0,12,8"
+                        Command="{Binding ShowAddEventCommand}" />
+                <Button Content="{extensions:TranslateExtension ACTION_HIDE}"
+                        Style="{StaticResource SidebarLinkButton}"
+                        Width="140"
+                        Margin="0,0,12,8"
+                        Command="{Binding CancelNewEventCommand}"
+                        Visibility="{Binding IsAddFormVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <Button Content="{extensions:TranslateExtension ACTION_REFRESH}"
+                        Style="{StaticResource SidebarLinkButton}"
+                        Width="160"
+                        Margin="0,0,12,8"
+                        Command="{Binding RefreshCommand}" />
+            </WrapPanel>
+        </WrapPanel>
+
+        <!-- Inline add-event form -->
+        <Border Style="{StaticResource Card}" Margin="0,12,0,0" Visibility="{Binding IsAddFormVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel>
+                <TextBlock Text="{extensions:TranslateExtension SECTION_CALENDAR_ADD_EVENT}" Style="{StaticResource SubheadingText}" />
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Title spanning two columns -->
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{extensions:TranslateExtension LABEL_TITLE}" FontWeight="SemiBold" Margin="0,8,0,4" />
+                    <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding NewEventTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <!-- Date (left) and Time (right) -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{extensions:TranslateExtension LABEL_RECEIPT_DATE}" FontWeight="SemiBold" Margin="0,8,0,4" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{extensions:TranslateExtension LABEL_TIME}" FontWeight="SemiBold" Margin="12,8,0,4" />
+                    <DatePicker Grid.Row="3" Grid.Column="0" SelectedDate="{Binding NewEventDate, Mode=TwoWay}" CalendarStyle="{StaticResource ThemedCalendar}" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewEventTime, Mode=TwoWay}" Width="160" />
+
+                    <!-- Reminder across two columns -->
+                    <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,4,0,0" VerticalAlignment="Center">
+                        <CheckBox Content="{extensions:TranslateExtension LABEL_USE_REMINDER}" IsChecked="{Binding NewEventUseReminder}" />
+                        <TextBox Text="{Binding NewEventReminderMinutes, Mode=TwoWay}" Width="80" Margin="12,0,0,0" />
+                        <TextBlock Text="{extensions:TranslateExtension CALENDAR_EVENT_REMINDER_MINUTES_SUFFIX}" VerticalAlignment="Center" Margin="6,0,0,0" />
+                    </StackPanel>
+
+                    <!-- Type (left) and Recurrence (right) -->
+                    <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="{extensions:TranslateExtension LABEL_EVENT_TYPE}" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <ComboBox ItemsSource="{Binding AlertTypes}" SelectedItem="{Binding NewEventAlertType, Mode=TwoWay}" Width="200" />
+                        <TextBlock Text="{extensions:TranslateExtension LABEL_RECURRENCE}" VerticalAlignment="Center" Margin="16,0,8,0" />
+                        <ComboBox ItemsSource="{Binding RecurrenceTypes}" SelectedItem="{Binding NewEventRecurrence, Mode=TwoWay}" Width="200" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Notes -->
+                <TextBlock Text="{extensions:TranslateExtension LABEL_NOTES}" FontWeight="SemiBold" Margin="0,12,0,4" />
+                <TextBox Text="{Binding NewEventNotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="80" TextWrapping="Wrap" />
+
+                <!-- Actions -->
+                <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                    <Button Content="{extensions:TranslateExtension ACTION_SAVE}" Style="{StaticResource AccentButton}" Command="{Binding SaveNewEventCommand}" />
+                    <Button Content="{extensions:TranslateExtension ACTION_CANCEL}" Style="{StaticResource SidebarLinkButton}" Command="{Binding CancelNewEventCommand}" Margin="12,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+
+         <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,24,0,0">
+             <Grid>
+                 <Grid.RowDefinitions>
+                     <RowDefinition Height="Auto" />
+                     <RowDefinition Height="*" />
+                 </Grid.RowDefinitions>
+
+                 <TextBlock Text="{extensions:TranslateExtension SECTION_ALERTS}" Style="{StaticResource SubheadingText}" Margin="0,0,0,16" />
+                 <ListView Grid.Row="1"
+                           ItemsSource="{Binding Events}"
+                           BorderThickness="0"
+                           HorizontalAlignment="Stretch"
+                           HorizontalContentAlignment="Stretch"
+                           Margin="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:Items.CalendarEventViewModel}">
+                            <Border Background="{DynamicResource SurfaceAltBrush}"
+                                    BorderBrush="{DynamicResource SurfaceAltBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="12"
+                                    Margin="0,0,0,8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}" />
+                                        <TextBlock Text="{Binding Notes}" Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap" Margin="0,4,0,0">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Notes}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Notes}" Value="">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <WrapPanel Margin="0,8,0,0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding ScheduledAt, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" Margin="0,0,12,0" Foreground="{DynamicResource PrimaryTextBrush}" />
+                                            <TextBlock Text="{Binding EventTypeDisplay}" Margin="0,0,12,0" Foreground="{DynamicResource PrimaryTextBrush}" />
+                                            <TextBlock Text="{Binding ReminderDisplay}" Margin="0,0,12,0" Foreground="{DynamicResource PrimaryTextBrush}" />
+                                            <TextBlock Text="{Binding RecurrenceDisplay}" Foreground="{DynamicResource PrimaryTextBrush}" />
+                                            <TextBlock Text="·" Margin="12,0,12,0" Foreground="{DynamicResource PrimaryTextBrush}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsDismissed}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="{extensions:TranslateExtension CALENDAR_ALERT_ACKNOWLEDGED}" Foreground="{DynamicResource SuccessBrush}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsDismissed}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </WrapPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <Button Content="{extensions:TranslateExtension ACTION_EDIT}"
+                                                Style="{StaticResource SidebarLinkButton}"
+                                                MinWidth="80"
+                                                Margin="0,0,8,0"
+                                                Command="{Binding DataContext.EditEventCommand, ElementName=Root}"
+                                                CommandParameter="{Binding}" />
+                                        <Button Content="{extensions:TranslateExtension ACTION_DISMISS}"
+                                                Style="{StaticResource CalendarDismissButtonStyle}"
+                                                Command="{Binding DataContext.DismissEventCommand, ElementName=Root}"
+                                                CommandParameter="{Binding}">
+                                        </Button>
+                                        <Button Content="{extensions:TranslateExtension ACTION_REMOVE}"
+                                                Style="{StaticResource SidebarLinkButton}"
+                                                MinWidth="80"
+                                                Command="{Binding DataContext.DeleteEventCommand, ElementName=Root}"
+                                                CommandParameter="{Binding}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
