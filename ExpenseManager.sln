@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DEBF1C76-9918-433D-9C8C-6AC4B9F8F4E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Desktop", "src\ExpenseManager.Desktop\ExpenseManager.Desktop.csproj", "{CA07DE5A-B9F5-4238-A6F3-E11E9BB0F2F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Domain", "src\ExpenseManager.Domain\ExpenseManager.Domain.csproj", "{23E50D8D-0FBB-46CB-A06A-9E4239D2A0F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Infrastructure", "src\ExpenseManager.Infrastructure\ExpenseManager.Infrastructure.csproj", "{94B25C6B-23FF-43CE-996E-5CAA9A566288}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Application", "src\ExpenseManager.Application\ExpenseManager.Application.csproj", "{4195437F-7C1D-484B-960B-5CD0FCF6C40B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED0CE211-80BE-4C6D-9100-8D00EE2C0CFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Desktop.Tests", "tests\ExpenseManager.Desktop.Tests\ExpenseManager.Desktop.Tests.csproj", "{7E1AD9C9-CA86-426C-AFA7-0C39D36A37BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Domain.Tests", "tests\ExpenseManager.Domain.Tests\ExpenseManager.Domain.Tests.csproj", "{8E92C2F5-BC27-4C83-990D-44AADEBED44D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA07DE5A-B9F5-4238-A6F3-E11E9BB0F2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA07DE5A-B9F5-4238-A6F3-E11E9BB0F2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA07DE5A-B9F5-4238-A6F3-E11E9BB0F2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA07DE5A-B9F5-4238-A6F3-E11E9BB0F2F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E50D8D-0FBB-46CB-A06A-9E4239D2A0F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E50D8D-0FBB-46CB-A06A-9E4239D2A0F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E50D8D-0FBB-46CB-A06A-9E4239D2A0F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E50D8D-0FBB-46CB-A06A-9E4239D2A0F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B25C6B-23FF-43CE-996E-5CAA9A566288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B25C6B-23FF-43CE-996E-5CAA9A566288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B25C6B-23FF-43CE-996E-5CAA9A566288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B25C6B-23FF-43CE-996E-5CAA9A566288}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4195437F-7C1D-484B-960B-5CD0FCF6C40B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4195437F-7C1D-484B-960B-5CD0FCF6C40B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4195437F-7C1D-484B-960B-5CD0FCF6C40B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4195437F-7C1D-484B-960B-5CD0FCF6C40B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E1AD9C9-CA86-426C-AFA7-0C39D36A37BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E1AD9C9-CA86-426C-AFA7-0C39D36A37BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E1AD9C9-CA86-426C-AFA7-0C39D36A37BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E1AD9C9-CA86-426C-AFA7-0C39D36A37BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E92C2F5-BC27-4C83-990D-44AADEBED44D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E92C2F5-BC27-4C83-990D-44AADEBED44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E92C2F5-BC27-4C83-990D-44AADEBED44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E92C2F5-BC27-4C83-990D-44AADEBED44D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CA07DE5A-B9F5-4238-A6F3-E11E9BB0F2F9} = {DEBF1C76-9918-433D-9C8C-6AC4B9F8F4E5}
+		{23E50D8D-0FBB-46CB-A06A-9E4239D2A0F2} = {DEBF1C76-9918-433D-9C8C-6AC4B9F8F4E5}
+		{94B25C6B-23FF-43CE-996E-5CAA9A566288} = {DEBF1C76-9918-433D-9C8C-6AC4B9F8F4E5}
+		{4195437F-7C1D-484B-960B-5CD0FCF6C40B} = {DEBF1C76-9918-433D-9C8C-6AC4B9F8F4E5}
+		{7E1AD9C9-CA86-426C-AFA7-0C39D36A37BA} = {ED0CE211-80BE-4C6D-9100-8D00EE2C0CFA}
+		{8E92C2F5-BC27-4C83-990D-44AADEBED44D} = {ED0CE211-80BE-4C6D-9100-8D00EE2C0CFA}
+	EndGlobalSection
+EndGlobal

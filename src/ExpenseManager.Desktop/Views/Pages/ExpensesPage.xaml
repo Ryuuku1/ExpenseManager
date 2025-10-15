@@ -1,0 +1,295 @@
+<UserControl x:Class="ExpenseManager.Desktop.Views.Pages.ExpensesPage"
+             x:Name="Root"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:items="clr-namespace:ExpenseManager.Desktop.ViewModels.Items"
+             xmlns:vm="clr-namespace:ExpenseManager.Desktop.ViewModels"
+             xmlns:extensions="clr-namespace:ExpenseManager.Desktop.Extensions"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:ExpensesViewModel}"
+             Background="Transparent">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="VisibleWhenForm" TargetType="FrameworkElement">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsFormVisible}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="VisibleWhenDetails" TargetType="FrameworkElement">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsFormVisible}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="DetailLabel">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}" />
+            <Setter Property="Margin" Value="0,12,0,2" />
+        </Style>
+        <Style x:Key="QuickActionAccentButton" TargetType="Button" BasedOn="{StaticResource AccentButton}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Padding" Value="20,12" />
+            <Setter Property="MinWidth" Value="200" />
+            <Setter Property="MinHeight" Value="52" />
+        </Style>
+        <Style x:Key="QuickActionSecondaryButton" TargetType="Button" BasedOn="{StaticResource SidebarLinkButton}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Padding" Value="20,12" />
+            <Setter Property="MinWidth" Value="180" />
+            <Setter Property="MinHeight" Value="52" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+    <Button Content="{extensions:TranslateExtension ACTION_NEW_EXPENSE}" Style="{StaticResource QuickActionAccentButton}" Margin="0,0,12,0"
+                    Command="{Binding BeginAddExpenseCommand}" />
+    <Button Content="{extensions:TranslateExtension ACTION_EDIT}" Style="{StaticResource QuickActionSecondaryButton}" Margin="0,0,12,0"
+                    Command="{Binding BeginEditExpenseCommand}" />
+    <Button Content="{extensions:TranslateExtension ACTION_DELETE}" Style="{StaticResource QuickActionSecondaryButton}" Margin="0,0,12,0"
+                    Command="{Binding DeleteExpenseCommand}" />
+    <Button Content="{extensions:TranslateExtension ACTION_REFRESH}" Style="{StaticResource QuickActionSecondaryButton}"
+                    Command="{Binding RefreshCommand}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource Card}" Margin="0,0,8,0">
+                <DataGrid ItemsSource="{Binding Expenses}"
+                          SelectedItem="{Binding SelectedExpense, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          HeadersVisibility="Column"
+                          SelectionMode="Single"
+                          GridLinesVisibility="None"
+                          RowBackground="{DynamicResource TableRowBackgroundBrush}"
+                          AlternatingRowBackground="{DynamicResource TableRowAlternateBrush}"
+                          FontSize="16">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                            <Setter Property="Margin" Value="0,6" />
+                            <Setter Property="Padding" Value="12,10" />
+                            <Setter Property="MinHeight" Value="48" />
+                        </Style>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}" />
+                            <Setter Property="Background" Value="{DynamicResource SurfaceAltBrush}" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceAltBorderBrush}" />
+                            <Setter Property="Padding" Value="12,10" />
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{extensions:TranslateExtension LABEL_TITLE}" Binding="{Binding Title}" Width="2*" />
+                        <DataGridTextColumn Header="{extensions:TranslateExtension LABEL_CATEGORY}" Binding="{Binding CategoryName}" Width="*" />
+                        <DataGridTextColumn Header="{extensions:TranslateExtension LABEL_DATE}" Binding="{Binding DateDisplay}" Width="*" />
+                        <DataGridTextColumn Header="{extensions:TranslateExtension LABEL_AMOUNT}" Binding="{Binding AmountDisplay}" Width="*" />
+                        <DataGridTextColumn Header="{extensions:TranslateExtension LABEL_STATUS}" Binding="{Binding StatusDisplay}" Width="*" />
+                        <DataGridTextColumn Header="{extensions:TranslateExtension LABEL_PAYMENT_METHOD}" Binding="{Binding PaymentMethodDisplay}" Width="*" />
+                        <DataGridTextColumn Header="{extensions:TranslateExtension LABEL_DUE_DATE}" Binding="{Binding DueDateDisplay}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource Card}" Margin="8,0,0,0">
+                <Grid>
+                    <ScrollViewer Style="{StaticResource VisibleWhenDetails}">
+                        <StackPanel>
+                            <ContentControl Content="{Binding Details}">
+                                <ContentControl.ContentTemplate>
+                                    <DataTemplate DataType="{x:Type items:ExpenseDetailsViewModel}">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding CategoryName}" Style="{StaticResource MutedText}" Margin="0,4,0,12" />
+                                            <TextBlock Text="{Binding AmountDisplay}" FontSize="18" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding StatusDisplay}" Margin="0,4,0,0" />
+                                            <TextBlock Text="{Binding PaymentMethodDisplay}" Margin="0,2,0,0" />
+                                            <TextBlock Text="{Binding ExpenseDateDisplay}" Margin="0,12,0,0" />
+                                            <TextBlock Text="{Binding DueDateDisplay}" />
+
+                                            <TextBlock Text="{extensions:TranslateExtension LABEL_DESCRIPTION}" Style="{StaticResource DetailLabel}" />
+                                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
+
+                                            <TextBlock Text="{extensions:TranslateExtension LABEL_ATTACHMENTS}" Style="{StaticResource DetailLabel}" />
+                                            <ItemsControl ItemsSource="{Binding Attachments}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="{x:Type items:ExpenseAttachmentItemViewModel}">
+                                                        <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,4,0,0">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="{Binding FileName}" FontWeight="SemiBold" />
+                                                                    <TextBlock Text="{Binding SizeDisplay}" Style="{StaticResource MutedText}" />
+                                                                    <TextBlock Text="{Binding UploadedAtDisplay}" Style="{StaticResource MutedText}" />
+                                                                </StackPanel>
+                                <Button Grid.Column="1"
+                                    Content="{extensions:TranslateExtension ACTION_OPEN}"
+                                    Style="{StaticResource SidebarLinkButton}"
+                                    Command="{Binding DataContext.OpenAttachmentCommand, ElementName=Root}"
+                                    CommandParameter="{Binding}" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ContentControl.ContentTemplate>
+                            </ContentControl>
+                            <TextBlock Text="{extensions:TranslateExtension MESSAGE_SELECT_EXPENSE}" HorizontalAlignment="Center" Margin="0,16,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Details}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <ScrollViewer Style="{StaticResource VisibleWhenForm}">
+                        <StackPanel DataContext="{Binding Form}" Margin="0,0,0,16">
+                            <TextBlock FontSize="20" FontWeight="SemiBold">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{extensions:TranslateExtension ACTION_NEW_EXPENSE}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsEditMode}" Value="True">
+                                                <Setter Property="Text" Value="{extensions:TranslateExtension TITLE_EDIT_EXPENSE}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock Margin="0,4,0,16">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
+                                        <Setter Property="Text" Value="{extensions:TranslateExtension MESSAGE_FILL_DETAILS}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsEditMode}" Value="True">
+                                                <Setter Property="Text" Value="{extensions:TranslateExtension MESSAGE_UPDATE_AND_SAVE}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <TextBlock Text="{extensions:TranslateExtension LABEL_CATEGORY}" FontWeight="SemiBold" />
+                            <ComboBox ItemsSource="{Binding Categories}" DisplayMemberPath="DisplayName" SelectedItem="{Binding SelectedCategory}" Margin="0,4,0,12" />
+
+                            <TextBlock Text="{extensions:TranslateExtension LABEL_TITLE}" FontWeight="SemiBold" />
+                            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12" />
+
+                            <TextBlock Text="{extensions:TranslateExtension LABEL_DESCRIPTION}" FontWeight="SemiBold" />
+                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12" Height="80" AcceptsReturn="True" TextWrapping="Wrap" />
+
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                    <TextBlock Text="{extensions:TranslateExtension LABEL_AMOUNT}" FontWeight="SemiBold" />
+                                    <TextBox Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{extensions:TranslateExtension LABEL_CURRENCY}" FontWeight="SemiBold" />
+                                    <ComboBox ItemsSource="{Binding CurrencyValues}" SelectedItem="{Binding SelectedCurrency}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                    <TextBlock Text="{extensions:TranslateExtension LABEL_PAID_ON}" FontWeight="SemiBold" />
+                                    <DatePicker SelectedDate="{Binding ExpenseDate}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{extensions:TranslateExtension LABEL_METHOD}" FontWeight="SemiBold" />
+                                    <ComboBox ItemsSource="{Binding PaymentMethodOptions}"
+                                              DisplayMemberPath="DisplayName"
+                                              SelectedValuePath="Value"
+                                              SelectedValue="{Binding SelectedPaymentMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <CheckBox Content="{extensions:TranslateExtension ACTION_SET_DUE_DATE}" IsChecked="{Binding HasDueDate}" Margin="0,0,0,8" />
+                            <DatePicker SelectedDate="{Binding DueDate}" Visibility="{Binding HasDueDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                            <TextBlock Text="{extensions:TranslateExtension LABEL_STATUS}" FontWeight="SemiBold" Margin="0,12,0,4" />
+                            <ComboBox ItemsSource="{Binding StatusValues}" SelectedItem="{Binding SelectedStatus}" />
+
+                            <StackPanel Orientation="Horizontal" Margin="0,16,0,8">
+                                <TextBlock Text="{extensions:TranslateExtension LABEL_ATTACHMENTS}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <Button Content="{extensions:TranslateExtension ACTION_ADD}" Style="{StaticResource SidebarLinkButton}" Width="120" Margin="12,0,0,0"
+                    Command="{Binding DataContext.AddAttachmentCommand, ElementName=Root}" />
+                            </StackPanel>
+
+                            <ItemsControl ItemsSource="{Binding Attachments}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type items:ExpenseAttachmentInputViewModel}">
+                                        <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,4,0,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding FileName}" FontWeight="SemiBold" />
+                                                    <TextBlock Text="{Binding SizeDisplay}" Style="{StaticResource MutedText}" />
+                                                    <TextBlock Text="{Binding FilePath}" Style="{StaticResource MutedText}" TextTrimming="CharacterEllipsis" />
+                                                </StackPanel>
+                        <Button Grid.Column="1"
+                            Content="{extensions:TranslateExtension ACTION_REMOVE}"
+                            Style="{StaticResource SidebarLinkButton}"
+                            Command="{Binding DataContext.RemoveAttachmentCommand, ElementName=Root}"
+                            CommandParameter="{Binding}" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,24,0,0">
+                <Button Content="{extensions:TranslateExtension ACTION_CANCEL}" Style="{StaticResource SidebarLinkButton}" Width="120" Margin="0,0,8,0"
+                    Command="{Binding DataContext.CancelFormCommand, ElementName=Root}" />
+                <Button Content="{extensions:TranslateExtension ACTION_SAVE}" Style="{StaticResource AccentButton}" Width="140"
+                    Command="{Binding DataContext.SaveExpenseCommand, ElementName=Root}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,58 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="BackgroundColor">#FF211220</Color>
+    <Color x:Key="SidebarColor">#FF180D18</Color>
+    <Color x:Key="CardColor">#FF2B1A2C</Color>
+    <Color x:Key="CardBorderColor">#FF3A253C</Color>
+    <Color x:Key="SurfaceAltColor">#FF2E1F30</Color>
+    <Color x:Key="SurfaceAltBorderColor">#FF3A2A3B</Color>
+    <Color x:Key="InputBackgroundColor">#FF251627</Color>
+    <Color x:Key="InputBorderColor">#FF3A253C</Color>
+    <Color x:Key="ListItemBackgroundColor">#FF2E1F30</Color>
+    <Color x:Key="ListItemHoverColor">#33EC6330</Color>
+    <Color x:Key="ListItemSelectedColor">#55EC6330</Color>
+    <Color x:Key="TableRowBackgroundColor">#FF311F32</Color>
+    <Color x:Key="TableRowAlternateColor">#FF39263A</Color>
+    <Color x:Key="TableRowHoverColor">#33EC6330</Color>
+    <Color x:Key="TableRowSelectedColor">#55EC6330</Color>
+    <Color x:Key="AccentColor">#FFEC6330</Color>
+    <Color x:Key="AccentHoverColor">#FFF57848</Color>
+    <Color x:Key="PrimaryTextColor">#FFFFFFFF</Color>
+    <Color x:Key="SecondaryTextColor">#FFF8D3C7</Color>
+    <Color x:Key="MutedTextColor">#FFECB497</Color>
+    <Color x:Key="ChartBackgroundColor">#FF352336</Color>
+    <Color x:Key="ChartPlotAreaColor">#FF2A1B2C</Color>
+    <Color x:Key="ChartGridlineColor">#44EC6330</Color>
+    <Color x:Key="ChartCardColor">#FF352336</Color>
+    <Color x:Key="ChartCardBorderColor">#FF473141</Color>
+    <Color x:Key="ScrollbarThumbColor">#FF4C374B</Color>
+    <Color x:Key="ShadowColor">#66000000</Color>
+
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarColor}" />
+    <SolidColorBrush x:Key="CardBrush" Color="{StaticResource CardColor}" />
+    <SolidColorBrush x:Key="CardBorderBrush" Color="{StaticResource CardBorderColor}" />
+    <SolidColorBrush x:Key="SurfaceAltBrush" Color="{StaticResource SurfaceAltColor}" />
+    <SolidColorBrush x:Key="SurfaceAltBorderBrush" Color="{StaticResource SurfaceAltBorderColor}" />
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="{StaticResource InputBackgroundColor}" />
+    <SolidColorBrush x:Key="InputBorderBrush" Color="{StaticResource InputBorderColor}" />
+    <SolidColorBrush x:Key="ListItemBackgroundBrush" Color="{StaticResource ListItemBackgroundColor}" />
+    <SolidColorBrush x:Key="ListItemHoverBrush" Color="{StaticResource ListItemHoverColor}" />
+    <SolidColorBrush x:Key="ListItemSelectedBrush" Color="{StaticResource ListItemSelectedColor}" />
+    <SolidColorBrush x:Key="TableRowBackgroundBrush" Color="{StaticResource TableRowBackgroundColor}" />
+    <SolidColorBrush x:Key="TableRowAlternateBrush" Color="{StaticResource TableRowAlternateColor}" />
+    <SolidColorBrush x:Key="TableRowHoverBrush" Color="{StaticResource TableRowHoverColor}" />
+    <SolidColorBrush x:Key="TableRowSelectedBrush" Color="{StaticResource TableRowSelectedColor}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}" />
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryTextColor}" />
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}" />
+    <SolidColorBrush x:Key="MutedTextBrush" Color="{StaticResource MutedTextColor}" />
+    <SolidColorBrush x:Key="ChartBackgroundBrush" Color="{StaticResource ChartBackgroundColor}" />
+    <SolidColorBrush x:Key="ChartPlotAreaBrush" Color="{StaticResource ChartPlotAreaColor}" />
+    <SolidColorBrush x:Key="ChartGridlineBrush" Color="{StaticResource ChartGridlineColor}" />
+    <SolidColorBrush x:Key="ChartCardBrush" Color="{StaticResource ChartCardColor}" />
+    <SolidColorBrush x:Key="ChartCardBorderBrush" Color="{StaticResource ChartCardBorderColor}" />
+    <SolidColorBrush x:Key="ScrollbarThumbBrush" Color="{StaticResource ScrollbarThumbColor}" />
+    <SolidColorBrush x:Key="ShadowBrush" Color="{StaticResource ShadowColor}" />
+</ResourceDictionary>
